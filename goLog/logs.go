@@ -1,21 +1,23 @@
-package logs
+package GoloG
 
 import (
 	"fmt"
+	"github.com/NoOl01/GoLog/internal"
 	"github.com/NoOl01/GoLog/options"
+
 	"os"
 	"time"
 )
 
 func writeLog(logType, logMessage string) {
-	_, err := os.Stat(options.DirectoryName)
+	_, err := os.Stat(internal.DirectoryName)
 	if err != nil {
-		options.SetLogDir(options.DirectoryName)
+		options.SetLogDir(internal.DirectoryName)
 		fmt.Printf("Error: %s\n", err)
 	}
 
 	name := logType + "-" + time.Now().Format("02-01-2006_15.04")
-	file, err := os.Create("./" + options.DirectoryName + "/" + name + "." + string(options.FileExtension))
+	file, err := os.Create("./" + internal.DirectoryName + "/" + name + "." + string(internal.FileExtension))
 
 	if err != nil {
 		fmt.Printf("Error creating file: %v", err)
@@ -35,7 +37,7 @@ func writeLog(logType, logMessage string) {
 			if err != nil {
 				return
 			}
-			if options.Console {
+			if internal.Console {
 				fmt.Printf("\033[31m[ERROR]\033[0m: %s\n", logMessage)
 			}
 		}
@@ -45,7 +47,7 @@ func writeLog(logType, logMessage string) {
 			if err != nil {
 				return
 			}
-			if options.Console {
+			if internal.Console {
 				fmt.Printf("\033[33m[WARNING]\033[0m: %s\n", logMessage)
 			}
 		}
@@ -55,7 +57,7 @@ func writeLog(logType, logMessage string) {
 			if err != nil {
 				return
 			}
-			if options.Console {
+			if internal.Console {
 				fmt.Printf("\033[37m[INFO]\033[0m: %s\n", logMessage)
 			}
 		}
