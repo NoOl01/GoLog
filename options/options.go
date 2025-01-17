@@ -3,23 +3,23 @@ package options
 import (
 	"fmt"
 	"github.com/NoOl01/GoLog/internal"
+	"log"
 	"os"
 )
 
 // SetLogDir — sets the name of the folder for storing logs.
 // `options.SetLogDir(<Your directory name>)`
 func SetLogDir(dirName string) {
-	_, err := os.Stat(dirName)
-	if err == nil {
-		fmt.Printf("[GoLog INFO] Directory %s already exist", dirName)
-		internal.DirectoryName = dirName
-		return
+	dir, _ := os.Stat(dirName)
+	if dir != nil && dir.IsDir() {
+		fmt.Printf("\u001B[37m[GoLog INFO]\u001B[0m Directory %s already exist\n", dirName)
 	}
 	if dirName == "" {
 		dirName = "logger"
 	}
-	err = os.Mkdir("./"+dirName, 07)
+	err := os.Mkdir("./"+dirName, 0755)
 	if err != nil {
+		log.Panicf("\u001B[31m[GoLog ERROR]\u001B[0m: %s", err)
 		return
 	}
 	internal.DirectoryName = dirName

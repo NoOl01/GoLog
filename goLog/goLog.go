@@ -1,32 +1,33 @@
-package GoloG
+package goLog
 
 import (
 	"fmt"
 	"github.com/NoOl01/GoLog/internal"
 	"github.com/NoOl01/GoLog/options"
-
 	"os"
 	"time"
 )
 
 func writeLog(logType, logMessage string) {
-	_, err := os.Stat(internal.DirectoryName)
-	if err != nil {
+	dir, _ := os.Stat(internal.DirectoryName)
+	if dir == nil || !dir.IsDir() {
 		options.SetLogDir(internal.DirectoryName)
-		fmt.Printf("Error: %s\n", err)
+		fmt.Printf("\u001B[37m[GoLog INFO]\u001B[0m: %s not exist. Creating directory\n", internal.DirectoryName)
 	}
 
 	name := logType + "-" + time.Now().Format("02-01-2006_15.04")
 	file, err := os.Create("./" + internal.DirectoryName + "/" + name + "." + string(internal.FileExtension))
 
 	if err != nil {
-		fmt.Printf("Error creating file: %v", err)
+		fmt.Printf("\u001B[31m[GoLog ERROR]\u001B[0m: %v", err)
+		return
 	}
 
 	defer func(file *os.File) {
 		err := file.Close()
 		if err != nil {
-			fmt.Printf("Error closing file: %v", err)
+			fmt.Printf("\u001B[31m[GoLog ERROR]\u001B[0m: %v", err)
+			return
 		}
 	}(file)
 
@@ -38,7 +39,7 @@ func writeLog(logType, logMessage string) {
 				return
 			}
 			if internal.Console {
-				fmt.Printf("\033[31m[ERROR]\033[0m: %s\n", logMessage)
+				fmt.Printf("\u001B[31m[ERROR]\u001B[0m: %s\n", logMessage)
 			}
 		}
 	case "warn_log":
@@ -48,7 +49,7 @@ func writeLog(logType, logMessage string) {
 				return
 			}
 			if internal.Console {
-				fmt.Printf("\033[33m[WARNING]\033[0m: %s\n", logMessage)
+				fmt.Printf("\u001B[31m[ERROR]\u001B[0m: %s\n", logMessage)
 			}
 		}
 	case "info_log":
@@ -58,7 +59,7 @@ func writeLog(logType, logMessage string) {
 				return
 			}
 			if internal.Console {
-				fmt.Printf("\033[37m[INFO]\033[0m: %s\n", logMessage)
+				fmt.Printf("\u001B[31m[ERROR]\u001B[0m: %s\n", logMessage)
 			}
 		}
 	}
