@@ -1,10 +1,10 @@
-## GoLog
+# GoLog
 "GoLog" is a simple logging library based on the principle: one log — one file. With GoLog, you can customize certain features to suit your needs.
 
-# Install
-`go get github.com/NoOl01/GoLog`
+## Install
+```go get github.com/NoOl01/GoLog```
 
-# Features
+## Features
 - Log entries to both separate files and the console.
 - Different types of logs: Error, Warning, Info.
 - Files are created in the format: "error type — log date", which ensures easy searching by date.
@@ -14,10 +14,10 @@
 - Cleanup of old logs with the option to set a custom date after which the log will be considered outdated.
 - Timer setup for automatic log cleanup with a configurable interval.
 
-# Known Issues
+## Known Issues
 - In case of a large number of requests, the log may be overwritten instead of creating a new one.
 
-# Example
+## Example
 ```
 package main
 
