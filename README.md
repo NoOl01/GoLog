@@ -17,6 +17,9 @@
 ## Known Issues
 - In case of a large number of requests, the log may be overwritten instead of creating a new one.
 
+## Planned
+- Add support for JSON format in log output
+
 ## Example
 ```
 package main
