@@ -7,3 +7,4 @@ var DirectoryName = "logger"
 
 var Console = true
 var FileExtension = "txt"
+var CleanerDeadline int16 = 0
